@@ -1,0 +1,5 @@
+source_url,reporting_period,period_start,period_end,download_date,filename,file_format,file_size_kb
+https://www.fca.org.uk/publication/data/firm-level-complaints-data-2024-h1.xlsx,2024H1,2024-01-01,2024-06-30,2026-09-01,firm-level-complaints-data-2024-h1.xlsx,xlsx,139.6
+https://www.fca.org.uk/publication/data/firm-level-complaints-data-2024-h2.xlsx,2024H2,2024-07-01,2024-12-31,2026-09-01,firm-level-complaints-data-2024-h2.xlsx,xlsx,127.8
+https://www.fca.org.uk/publication/data/firm-level-complaints-data-2025-h1.xlsx,2025H1,2025-01-01,2025-06-30,2026-09-01,firm-level-complaints-data-2025-h1.xlsx,xlsx,703.2
+https://www.fca.org.uk/publication/data/firm-level-complaints-data-2025-h2.xlsx,2025H2,2025-07-01,2025-12-31,2026-09-01,firm-level-complaints-data-2025-h2.xlsx,xlsx,111.3

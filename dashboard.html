@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UK Retail Banking Complaints Benchmark</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f0f4f8;color:#1e293b;font-size:14px}
+header{background:#1e3a5f;color:#fff;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+header h1{font-size:17px;font-weight:700}
+header span{font-size:11px;opacity:.75}
+.cd-banner{background:#fef9c3;border-bottom:1px solid #fde047;padding:8px 28px;font-size:12px;color:#713f12}
+.cd-banner strong{color:#92400e}
+nav{display:flex;background:#fff;border-bottom:2px solid #e2e8f0;padding:0 28px;gap:4px}
+.tab{padding:11px 18px;cursor:pointer;font-weight:600;font-size:13px;color:#64748b;border-bottom:3px solid transparent;transition:.15s}
+.tab.active{color:#1e3a5f;border-color:#2563eb}
+.tab:hover:not(.active){color:#334155}
+main{padding:20px 28px;max-width:1400px}
+.section{display:none}.section.active{display:block}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:#fff;border-radius:10px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.card h3{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px}
+.kpi-val{font-size:26px;font-weight:700;color:#1e3a5f;line-height:1}
+.kpi-sub{font-size:12px;color:#94a3b8;margin-top:5px}
+.kpi-cost{font-size:13px;font-weight:600;color:#7c3aed;margin-top:4px}
+.delta{display:inline-block;margin-top:6px;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:600}
+.up{background:#fef2f2;color:#dc2626}.dn{background:#f0fdf4;color:#16a34a}.neu{background:#f1f5f9;color:#475569}
+.chart-wrap{position:relative;height:260px}.chart-wrap.tall{height:320px}
+select{padding:6px 10px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;background:#fff}
+label{font-size:11px;font-weight:700;color:#475569;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead tr{background:#f8fafc}
+th{padding:8px 10px;text-align:left;font-weight:700;color:#475569;border-bottom:2px solid #e2e8f0;white-space:nowrap}
+td{padding:7px 10px;border-bottom:1px solid #f1f5f9}
+tr:hover td{background:#f8fafc}
+.badge{display:inline-block;padding:2px 7px;border-radius:9px;font-size:11px;font-weight:700}
+.br{background:#fef2f2;color:#dc2626}.ba{background:#fffbeb;color:#d97706}.bg{background:#f0fdf4;color:#16a34a}
+.src{font-size:11px;color:#94a3b8;margin-top:8px;font-style:italic}
+.opp{padding:14px 16px;border-left:4px solid #2563eb;background:#f8fafc;border-radius:0 8px 8px 0;margin-bottom:10px}
+.opp h4{font-size:13px;font-weight:700;margin-bottom:6px}
+.opp-meta{display:flex;gap:14px;flex-wrap:wrap}
+.om{font-size:12px;color:#64748b}.om strong{color:#1e293b}
+.om.cost strong{color:#7c3aed}
+.scard{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;margin-bottom:10px}
+.scard h4{font-size:13px;font-weight:700;margin-bottom:4px}
+.scard p{font-size:12px;color:#64748b;margin-bottom:10px;font-style:italic}
+.sg{display:flex;gap:10px;flex-wrap:wrap}
+.sv{text-align:center;padding:8px 14px;background:#fff;border-radius:6px;border:1px solid #e2e8f0;min-width:110px}
+.sv .n{font-size:15px;font-weight:700;color:#1e3a5f}.sv.purple .n{color:#7c3aed}
+.sv .l{font-size:11px;color:#64748b;margin-top:2px}
+.cd-note{background:#fef9c3;border:1px solid #fde047;border-radius:8px;padding:12px 16px;font-size:12px;color:#713f12;margin-bottom:16px}
+.cd-note strong{color:#92400e}
+@media(max-width:900px){.g4{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}.g3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>UK Retail Banking Complaints Benchmark</h1>
+  <span>FCA Firm-Level Data &nbsp;|&nbsp; 2024H1 – 2025H2 &nbsp;|&nbsp; ~220 Firms Per Period</span>
+</header>
+<div class="cd-banner">
+  <strong>Consumer Duty context:</strong> Under FCA Consumer Duty (effective July 2023), firms must demonstrate good outcomes for retail customers. Uphold rates and complaint volumes are direct evidence the FCA uses to assess whether firms are meeting the Duty. High uphold rates signal systematic product or process failure, not just poor complaint handling.
+</div>
+<nav>
+  <div class="tab active" onclick="showTab('overview')">Executive Overview</div>
+  <div class="tab" onclick="showTab('firm')">Firm Benchmark</div>
+  <div class="tab" onclick="showTab('product')">Product Benchmark</div>
+  <div class="tab" onclick="showTab('priority')">Risk &amp; Cost Exposure</div>
+</nav>
+<main>
+
+<!-- OVERVIEW -->
+<div id="overview" class="section active">
+  <div class="grid g4" style="margin-bottom:16px">
+    <div class="card"><h3>Complaints Opened (2025H2)</h3><div class="kpi-val" id="k-vol"></div><div class="kpi-sub">All firms, all products</div><div class="delta" id="k-vol-d"></div></div>
+    <div class="card"><h3>Est. Industry Cost Exposure</h3><div class="kpi-val" id="k-cost"></div><div class="kpi-cost">Per 6-month period (modelled)</div><div class="kpi-sub">Handling + FOS risk + redress</div></div>
+    <div class="card"><h3>Largest Product (2025H2)</h3><div class="kpi-val" id="k-top-prod"></div><div class="kpi-sub" id="k-top-share"></div></div>
+    <div class="card"><h3>Market Trend (2024H1–2025H2)</h3><div class="kpi-val" id="k-trend"></div><div class="kpi-sub">Total complaints change over 4 periods</div></div>
+  </div>
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="card">
+      <h3>Market Complaint Volume by Period</h3>
+      <div class="chart-wrap"><canvas id="c-market"></canvas></div>
+      <p class="src">FCA complaints opened per 6-month period across ~220 qualifying firms.</p>
+    </div>
+    <div class="card">
+      <h3>Product Mix — 2025H2</h3>
+      <div class="chart-wrap"><canvas id="c-prodmix"></canvas></div>
+    </div>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Top 20 Firms by Complaint Volume — 2025H2</h3>
+      <div class="chart-wrap tall"><canvas id="c-topfirms"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Top 20 Firms — Volume, Uphold Rate &amp; Cost Exposure</h3>
+      <div style="overflow-y:auto;max-height:340px">
+      <table><thead><tr><th>#</th><th>Firm</th><th>Complaints</th><th>Uphold %</th><th>Est. Cost</th></tr></thead>
+      <tbody id="t-top20"></tbody></table>
+      </div>
+      <p class="src">Cost = handling (£200/complaint) + FOS risk (8% × £650) + redress (uphold rate × £300). Assumptions stated — not audited figures.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FIRM BENCHMARK -->
+<div id="firm" class="section">
+  <div style="margin-bottom:16px;display:flex;align-items:flex-end;gap:24px">
+    <div><label>Select Firm</label><select id="firm-sel" onchange="updateFirm()"></select></div>
+    <div class="kpi-sub">Top 30 firms by 2025H2 complaint volume</div>
+  </div>
+  <div class="grid g4" style="margin-bottom:16px">
+    <div class="card"><h3>Complaints (2025H2)</h3><div class="kpi-val" id="fb-v"></div><div class="delta" id="fb-vd"></div></div>
+    <div class="card"><h3>Uphold Rate % (2025H2)</h3><div class="kpi-val" id="fb-u"></div><div class="kpi-sub">Weighted by complaints — Consumer Duty signal</div></div>
+    <div class="card"><h3>% Closed Within 3 Days</h3><div class="kpi-val" id="fb-c"></div><div class="kpi-sub">FCA closure timing metric</div></div>
+    <div class="card"><h3>Est. Cost Exposure (2025H2)</h3><div class="kpi-val" id="fb-cost"></div><div class="kpi-sub">Modelled — see assumptions</div></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3>Complaint Volume — All Periods</h3><div class="chart-wrap"><canvas id="c-firm-vol"></canvas></div></div>
+    <div class="card"><h3>Uphold Rate % — All Periods (Consumer Duty indicator)</h3><div class="chart-wrap"><canvas id="c-firm-uph"></canvas></div></div>
+  </div>
+</div>
+
+<!-- PRODUCT BENCHMARK -->
+<div id="product" class="section">
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="card"><h3>Complaint Volume by Product — All Periods</h3><div class="chart-wrap tall"><canvas id="c-pvol"></canvas></div></div>
+    <div class="card"><h3>Uphold Rate % by Product — All Periods</h3><div class="chart-wrap tall"><canvas id="c-puph"></canvas></div></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3>% Closed Within 3 Days by Product</h3><div class="chart-wrap"><canvas id="c-pcl"></canvas></div></div>
+    <div class="card">
+      <h3>Product Summary — 2025H2 with Cost Exposure</h3>
+      <table><thead><tr><th>Product</th><th>Complaints</th><th>Share %</th><th>Uphold %</th><th>3-Day %</th><th>Est. Cost</th></tr></thead>
+      <tbody id="t-prod"></tbody></table>
+      <p class="src">Uphold rate weighted by volume. Cost = modelled estimate per assumptions. High uphold on Decumulation & pensions (70%) is a direct Consumer Duty concern.</p>
+    </div>
+  </div>
+</div>
+
+<!-- RISK & COST EXPOSURE -->
+<div id="priority" class="section">
+  <div class="cd-note">
+    <strong>Consumer Duty framing:</strong> The FCA's Consumer Duty (PS22/9) requires firms to deliver good outcomes across four areas: products &amp; services, price &amp; value, consumer understanding, and consumer support. Complaint uphold rates are a primary FCA supervisory metric. A sustained uphold rate above 50% in any product area indicates systematic failure to deliver the Duty — not merely a complaint-handling issue.
+  </div>
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="card">
+      <h3>Risk Matrix — Volume vs Uphold Rate (2025H2)</h3>
+      <div class="chart-wrap tall"><canvas id="c-scatter"></canvas></div>
+      <p class="src">Bubble size = estimated cost exposure. X axis = uphold rate (FCA's primary Consumer Duty signal). Upper-right quadrant = highest regulatory and cost risk.</p>
+    </div>
+    <div class="card">
+      <h3>Ranked Risk &amp; Cost Areas</h3>
+      <div id="opp-list"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Scenario Modelling — £ Impact of Operational Improvement</h3>
+    <p class="src" style="margin-bottom:12px">Assumption: avg cost per complaint ≈ £<span id="avg-cost"></span> (handling + FOS risk + redress). Scenarios are modelled estimates, not forecasts. All assumptions are stated.</p>
+    <div id="scen-list"></div>
+  </div>
+</div>
+
+</main>
+<script>
+const DATA = {
+  "periods": [
+    "2024H1",
+    "2024H2",
+    "2025H1",
+    "2025H2"
+  ],
+  "products": [
+    "Banking and credit cards",
+    "Decumulation & pensions",
+    "Home finance",
+    "Insurance & pure protection",
+    "Investments"
+  ],
+  "prod_col": [
+    "#2563eb",
+    "#7c3aed",
+    "#059669",
+    "#dc2626",
+    "#d97706"
+  ],
+  "market": {
+    "2024H1": 1774139,
+    "2024H2": 1692066,
+    "2025H1": 1740222,
+    "2025H2": 1652438
+  },
+  "market_cost_total": 695047534,
+  "avg_cost_per_compl": 420,
+  "prod_by_period": {
+    "2024H1": {
+      "Banking and credit cards": 841994,
+      "Decumulation & pensions": 85269,
+      "Home finance": 83750,
+      "Insurance & pure protection": 714244,
+      "Investments": 48882
+    },
+    "2024H2": {
+      "Banking and credit cards": 829764,
+      "Decumulation & pensions": 81104,
+      "Home finance": 74499,
+      "Insurance & pure protection": 668309,
+      "Investments": 38390
+    },
+    "2025H1": {
+      "Banking and credit cards": 888574,
+      "Decumulation & pensions": 85424,
+      "Home finance": 69356,
+      "Insurance & pure protection": 653535,
+      "Investments": 43333
+    },
+    "2025H2": {
+      "Banking and credit cards": 844807,
+      "Decumulation & pensions": 80272,
+      "Home finance": 66543,
+      "Insurance & pure protection": 620885,
+      "Investments": 39931
+    }
+  },
+  "uphold_by_product": {
+    "2024H1": {
+      "Banking and credit cards": 55.4,
+      "Decumulation & pensions": 65.6,
+      "Home finance": 56.8,
+      "Insurance & pure protection": 58.3,
+      "Investments": 58.4
+    },
+    "2024H2": {
+      "Banking and credit cards": 55.4,
+      "Decumulation & pensions": 70.2,
+      "Home finance": 56.7,
+      "Insurance & pure protection": 58.6,
+      "Investments": 62.1
+    },
+    "2025H1": {
+      "Banking and credit cards": 58.2,
+      "Decumulation & pensions": 68.8,
+      "Home finance": 56.6,
+      "Insurance & pure protection": 57.8,
+      "Investments": 57.5
+    },
+    "2025H2": {
+      "Banking and credit cards": 54.4,
+      "Decumulation & pensions": 70.0,
+      "Home finance": 56.5,
+      "Insurance & pure protection": 57.0,
+      "Investments": 54.3
+    }
+  },
+  "closure_by_product": {
+    "2024H1": {
+      "Banking and credit cards": {
+        "pct_3days": 38.1,
+        "pct_8weeks": 58.4
+      },
+      "Decumulation & pensions": {
+        "pct_3days": 16.4,
+        "pct_8weeks": 64.3
+      },
+      "Home finance": {
+        "pct_3days": 26.3,
+        "pct_8weeks": 63.3
+      },
+      "Insurance & pure protection": {
+        "pct_3days": 30.1,
+        "pct_8weeks": 62.1
+      },
+      "Investments": {
+        "pct_3days": 21.7,
+        "pct_8weeks": 67.7
+      }
+    },
+    "2024H2": {
+      "Banking and credit cards": {
+        "pct_3days": 38.9,
+        "pct_8weeks": 57.3
+      },
+      "Decumulation & pensions": {
+        "pct_3days": 17.4,
+        "pct_8weeks": 68.2
+      },
+      "Home finance": {
+        "pct_3days": 27.8,
+        "pct_8weeks": 62.2
+      },
+      "Insurance & pure protection": {
+        "pct_3days": 31.7,
+        "pct_8weeks": 62.6
+      },
+      "Investments": {
+        "pct_3days": 24.1,
+        "pct_8weeks": 65.6
+      }
+    },
+    "2025H1": {
+      "Banking and credit cards": {
+        "pct_3days": 39.1,
+        "pct_8weeks": 56.3
+      },
+      "Decumulation & pensions": {
+        "pct_3days": 18.5,
+        "pct_8weeks": 64.9
+      },
+      "Home finance": {
+        "pct_3days": 29.6,
+        "pct_8weeks": 63.5
+      },
+      "Insurance & pure protection": {
+        "pct_3days": 32.7,
+        "pct_8weeks": 61.0
+      },
+      "Investments": {
+        "pct_3days": 23.4,
+        "pct_8weeks": 65.9
+      }
+    },
+    "2025H2": {
+      "Banking and credit cards": {
+        "pct_3days": 38.4,
+        "pct_8weeks": 57.4
+      },
+      "Decumulation & pensions": {
+        "pct_3days": 18.4,
+        "pct_8weeks": 67.5
+      },
+      "Home finance": {
+        "pct_3days": 27.2,
+        "pct_8weeks": 68.7
+      },
+      "Insurance & pure protection": {
+        "pct_3days": 33.5,
+        "pct_8weeks": 60.4
+      },
+      "Investments": {
+        "pct_3days": 23.6,
+        "pct_8weeks": 69.0
+      }
+    }
+  },
+  "top30": [
+    "National Westminster Bank Public Limited Company",
+    "Lloyds Bank PLC",
+    "Barclays Bank UK PLC",
+    "HSBC UK Bank PLC",
+    "Bank Of Scotland PLC",
+    "Nationwide Building Society",
+    "Santander UK PLC",
+    "Eui Limited",
+    "Domestic & General Insurance PLC",
+    "Aviva Insurance Limited",
+    "Monzo Bank LTD",
+    "British Gas Services Limited",
+    "U K Insurance Limited",
+    "Clydesdale Bank PLC",
+    "TSB Bank PLC",
+    "Capital One (europe) PLC",
+    "Bupa Insurance Services Limited",
+    "Aviva Life Services UK Limited",
+    "The Royal Bank Of Scotland PLC",
+    "Hastings Insurance Services Limited",
+    "Axa Ppp Healthcare Limited",
+    "Vanquis Bank Limited",
+    "Starling Bank Limited",
+    "Phoenix Life Limited",
+    "Axa Insurance UK PLC",
+    "American Express Services Europe Limited",
+    "Liverpool Victoria Insurance Company Limited",
+    "Bisl Limited",
+    "Esure Insurance Limited",
+    "Metro Bank PLC"
+  ],
+  "firm_data": {
+    "National Westminster Bank Public Limited Company": {
+      "2024H2": {
+        "vol": 88461,
+        "uph": 63.0,
+        "cl3": 27.0,
+        "rank": 2,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 94120,
+        "uph": 60.3,
+        "cl3": 26.1,
+        "rank": 2,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 97511,
+        "uph": 57.2,
+        "cl3": 23.9,
+        "rank": 1,
+        "cost": 41311510
+      }
+    },
+    "Lloyds Bank PLC": {
+      "2024H1": {
+        "vol": 72949,
+        "uph": 64.0,
+        "cl3": 28.7,
+        "rank": 5,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 76760,
+        "uph": 66.2,
+        "cl3": 31.9,
+        "rank": 3,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 81403,
+        "uph": 66.8,
+        "cl3": 27.3,
+        "rank": 4,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 90837,
+        "uph": 68.5,
+        "cl3": 30.0,
+        "rank": 2,
+        "cost": 41544302
+      }
+    },
+    "Barclays Bank UK PLC": {
+      "2024H1": {
+        "vol": 79955,
+        "uph": 66.6,
+        "cl3": 35.8,
+        "rank": 3,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 68750,
+        "uph": 66.7,
+        "cl3": 33.0,
+        "rank": 6,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 154273,
+        "uph": 77.9,
+        "cl3": 31.5,
+        "rank": 1,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 85996,
+        "uph": 60.6,
+        "cl3": 53.2,
+        "rank": 3,
+        "cost": 37317964
+      }
+    },
+    "HSBC UK Bank PLC": {
+      "2024H1": {
+        "vol": 109178,
+        "uph": 60.2,
+        "cl3": 32.7,
+        "rank": 1,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 98421,
+        "uph": 59.9,
+        "cl3": 33.2,
+        "rank": 1,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 91389,
+        "uph": 59.8,
+        "cl3": 33.4,
+        "rank": 3,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 81503,
+        "uph": 58.5,
+        "cl3": 25.4,
+        "rank": 4,
+        "cost": 34837642
+      }
+    },
+    "Bank Of Scotland PLC": {
+      "2024H1": {
+        "vol": 78357,
+        "uph": 62.0,
+        "cl3": 29.2,
+        "rank": 4,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 74404,
+        "uph": 65.3,
+        "cl3": 33.4,
+        "rank": 4,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 77714,
+        "uph": 66.7,
+        "cl3": 23.3,
+        "rank": 5,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 79508,
+        "uph": 68.1,
+        "cl3": 27.1,
+        "rank": 5,
+        "cost": 36269959
+      }
+    },
+    "Nationwide Building Society": {
+      "2024H1": {
+        "vol": 61778,
+        "uph": 52.4,
+        "cl3": 28.4,
+        "rank": 8,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 63363,
+        "uph": 52.9,
+        "cl3": 33.7,
+        "rank": 8,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 65786,
+        "uph": 51.1,
+        "cl3": 34.7,
+        "rank": 7,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 69388,
+        "uph": 52.4,
+        "cl3": 32.1,
+        "rank": 6,
+        "cost": 28389406
+      }
+    },
+    "Santander UK PLC": {
+      "2024H1": {
+        "vol": 67816,
+        "uph": 50.2,
+        "cl3": 40.3,
+        "rank": 6,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 64646,
+        "uph": 49.1,
+        "cl3": 35.7,
+        "rank": 7,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 62386,
+        "uph": 48.4,
+        "cl3": 37.9,
+        "rank": 8,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 64741,
+        "uph": 46.3,
+        "cl3": 35.2,
+        "rank": 7,
+        "cost": 25309199
+      }
+    },
+    "Eui Limited": {
+      "2024H1": {
+        "vol": 66719,
+        "uph": 64.2,
+        "cl3": 51.8,
+        "rank": 7,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 73418,
+        "uph": 61.6,
+        "cl3": 46.4,
+        "rank": 5,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 70326,
+        "uph": 61.6,
+        "cl3": 47.8,
+        "rank": 6,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 60221,
+        "uph": 63.9,
+        "cl3": 47.6,
+        "rank": 8,
+        "cost": 26712831
+      }
+    },
+    "Domestic & General Insurance PLC": {
+      "2024H1": {
+        "vol": 48821,
+        "uph": 54.9,
+        "cl3": 53.8,
+        "rank": 11,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 44570,
+        "uph": 54.2,
+        "cl3": 77.7,
+        "rank": 13,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 60444,
+        "uph": 56.6,
+        "cl3": 77.6,
+        "rank": 9,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 56025,
+        "uph": 52.2,
+        "cl3": 75.0,
+        "rank": 9,
+        "cost": 22895176
+      }
+    },
+    "Aviva Insurance Limited": {
+      "2024H1": {
+        "vol": 48518,
+        "uph": 61.3,
+        "cl3": 29.0,
+        "rank": 12,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 49190,
+        "uph": 58.5,
+        "cl3": 31.9,
+        "rank": 12,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 48979,
+        "uph": 57.4,
+        "cl3": 36.7,
+        "rank": 11,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 49795,
+        "uph": 56.3,
+        "cl3": 43.5,
+        "rank": 10,
+        "cost": 20954234
+      }
+    },
+    "Monzo Bank LTD": {
+      "2024H1": {
+        "vol": 42089,
+        "uph": 33.0,
+        "cl3": 1.9,
+        "rank": 13,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 50752,
+        "uph": 32.3,
+        "cl3": 37.5,
+        "rank": 11,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 35092,
+        "uph": 30.1,
+        "cl3": 18.8,
+        "rank": 13,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 49570,
+        "uph": 30.0,
+        "cl3": 8.3,
+        "rank": 11,
+        "cost": 16957401
+      }
+    },
+    "British Gas Services Limited": {
+      "2024H1": {
+        "vol": 55282,
+        "uph": 96.4,
+        "cl3": 75.5,
+        "rank": 9,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 57808,
+        "uph": 95.5,
+        "cl3": 67.3,
+        "rank": 9,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 51725,
+        "uph": 94.9,
+        "cl3": 66.6,
+        "rank": 10,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 49016,
+        "uph": 93.1,
+        "cl3": 68.8,
+        "rank": 12,
+        "cost": 26037789
+      }
+    },
+    "U K Insurance Limited": {
+      "2024H1": {
+        "vol": 53474,
+        "uph": 70.3,
+        "cl3": 48.4,
+        "rank": 10,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 51800,
+        "uph": 69.3,
+        "cl3": 50.3,
+        "rank": 10,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 42802,
+        "uph": 68.7,
+        "cl3": 36.4,
+        "rank": 12,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 37282,
+        "uph": 67.4,
+        "cl3": 47.4,
+        "rank": 13,
+        "cost": 16937958
+      }
+    },
+    "Clydesdale Bank PLC": {
+      "2024H1": {
+        "vol": 34377,
+        "uph": 71.2,
+        "cl3": 25.7,
+        "rank": 15,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 37438,
+        "uph": 72.1,
+        "cl3": 17.7,
+        "rank": 14,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 31691,
+        "uph": 66.2,
+        "cl3": 32.4,
+        "rank": 14,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 34185,
+        "uph": 64.1,
+        "cl3": 24.0,
+        "rank": 14,
+        "cost": 15188396
+      }
+    },
+    "TSB Bank PLC": {
+      "2024H1": {
+        "vol": 25734,
+        "uph": 64.2,
+        "cl3": 61.9,
+        "rank": 19,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 31883,
+        "uph": 65.3,
+        "cl3": 53.8,
+        "rank": 15,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 29722,
+        "uph": 55.5,
+        "cl3": 58.7,
+        "rank": 16,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 33705,
+        "uph": 52.4,
+        "cl3": 63.2,
+        "rank": 15,
+        "cost": 13790064
+      }
+    },
+    "Capital One (europe) PLC": {
+      "2024H1": {
+        "vol": 24819,
+        "uph": 34.8,
+        "cl3": 16.3,
+        "rank": 20,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 23665,
+        "uph": 31.1,
+        "cl3": 9.1,
+        "rank": 20,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 24855,
+        "uph": 33.5,
+        "cl3": 14.4,
+        "rank": 18,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 30593,
+        "uph": 34.3,
+        "cl3": 14.4,
+        "rank": 16,
+        "cost": 10855620
+      }
+    },
+    "Bupa Insurance Services Limited": {
+      "2024H1": {
+        "vol": 33137,
+        "uph": 56.6,
+        "cl3": 47.6,
+        "rank": 17,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 31626,
+        "uph": 56.8,
+        "cl3": 63.1,
+        "rank": 16,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 31133,
+        "uph": 58.2,
+        "cl3": 55.6,
+        "rank": 15,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 28091,
+        "uph": 57.1,
+        "cl3": 58.1,
+        "rank": 17,
+        "cost": 11893448
+      }
+    },
+    "Aviva Life Services UK Limited": {
+      "2024H1": {
+        "vol": 24391,
+        "uph": 61.7,
+        "cl3": 36.4,
+        "rank": 21,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 23862,
+        "uph": 64.3,
+        "cl3": 27.7,
+        "rank": 19,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 25086,
+        "uph": 63.6,
+        "cl3": 24.3,
+        "rank": 17,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 26131,
+        "uph": 66.9,
+        "cl3": 22.0,
+        "rank": 18,
+        "cost": 11830288
+      }
+    },
+    "The Royal Bank Of Scotland PLC": {
+      "2024H1": {
+        "vol": 20286,
+        "uph": 65.5,
+        "cl3": 13.8,
+        "rank": 24,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 19605,
+        "uph": 64.2,
+        "cl3": 24.0,
+        "rank": 24,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 20019,
+        "uph": 61.4,
+        "cl3": 22.6,
+        "rank": 22,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 19884,
+        "uph": 58.5,
+        "cl3": 21.6,
+        "rank": 19,
+        "cost": 8503393
+      }
+    },
+    "Hastings Insurance Services Limited": {
+      "2024H1": {
+        "vol": 18217,
+        "uph": 53.2,
+        "cl3": 32.6,
+        "rank": 25,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 15998,
+        "uph": 50.6,
+        "cl3": 29.5,
+        "rank": 26,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 18123,
+        "uph": 53.0,
+        "cl3": 24.4,
+        "rank": 23,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 19781,
+        "uph": 52.0,
+        "cl3": 28.5,
+        "rank": 20,
+        "cost": 8073022
+      }
+    },
+    "Axa Ppp Healthcare Limited": {
+      "2024H1": {
+        "vol": 41657,
+        "uph": 48.0,
+        "cl3": 78.2,
+        "rank": 14,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 24510,
+        "uph": 56.0,
+        "cl3": 64.8,
+        "rank": 18,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 21855,
+        "uph": 55.2,
+        "cl3": 57.5,
+        "rank": 20,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 19555,
+        "uph": 54.6,
+        "cl3": 51.0,
+        "rank": 21,
+        "cost": 8130969
+      }
+    },
+    "Vanquis Bank Limited": {
+      "2024H1": {
+        "vol": 33775,
+        "uph": 15.1,
+        "cl3": 6.8,
+        "rank": 16,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 26951,
+        "uph": 19.9,
+        "cl3": 12.5,
+        "rank": 17,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 22086,
+        "uph": 16.5,
+        "cl3": 11.5,
+        "rank": 19,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 18304,
+        "uph": 29.9,
+        "cl3": 31.8,
+        "rank": 22,
+        "cost": 6256673
+      }
+    },
+    "Starling Bank Limited": {
+      "2024H1": {
+        "vol": 20482,
+        "uph": 52.5,
+        "cl3": 9.6,
+        "rank": 22,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 22175,
+        "uph": 43.0,
+        "cl3": 7.4,
+        "rank": 21,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 20833,
+        "uph": 36.8,
+        "cl3": 18.2,
+        "rank": 21,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 17323,
+        "uph": 41.0,
+        "cl3": 19.9,
+        "rank": 23,
+        "cost": 6495605
+      }
+    },
+    "Phoenix Life Limited": {
+      "2024H1": {
+        "vol": 13974,
+        "uph": 70.1,
+        "cl3": 27.7,
+        "rank": 31,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 14030,
+        "uph": 71.1,
+        "cl3": 28.4,
+        "rank": 28,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 16175,
+        "uph": 75.5,
+        "cl3": 33.3,
+        "rank": 25,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 17086,
+        "uph": 77.7,
+        "cl3": 23.4,
+        "rank": 24,
+        "cost": 8286368
+      }
+    },
+    "Axa Insurance UK PLC": {
+      "2024H1": {
+        "vol": 28525,
+        "uph": 59.3,
+        "cl3": 26.6,
+        "rank": 18,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 20381,
+        "uph": 58.3,
+        "cl3": 30.1,
+        "rank": 22,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 16910,
+        "uph": 57.5,
+        "cl3": 31.8,
+        "rank": 24,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 16052,
+        "uph": 58.7,
+        "cl3": 31.2,
+        "rank": 25,
+        "cost": 6872343
+      }
+    },
+    "American Express Services Europe Limited": {
+      "2024H2": {
+        "vol": 11273,
+        "uph": 32.6,
+        "cl3": 6.7,
+        "rank": 35,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 13353,
+        "uph": 34.0,
+        "cl3": 8.1,
+        "rank": 27,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 14814,
+        "uph": 33.1,
+        "cl3": 9.8,
+        "rank": 26,
+        "cost": 5203714
+      }
+    },
+    "Liverpool Victoria Insurance Company Limited": {
+      "2024H1": {
+        "vol": 10678,
+        "uph": 48.2,
+        "cl3": 35.4,
+        "rank": 39,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 9279,
+        "uph": 50.2,
+        "cl3": 30.7,
+        "rank": 39,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 10359,
+        "uph": 53.7,
+        "cl3": 30.6,
+        "rank": 33,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 12025,
+        "uph": 55.9,
+        "cl3": 36.1,
+        "rank": 27,
+        "cost": 5045450
+      }
+    },
+    "Bisl Limited": {
+      "2024H1": {
+        "vol": 11260,
+        "uph": 41.0,
+        "cl3": null,
+        "rank": 36,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 13571,
+        "uph": 37.2,
+        "cl3": 49.8,
+        "rank": 29,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 12473,
+        "uph": 38.1,
+        "cl3": 55.5,
+        "rank": 28,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 11577,
+        "uph": 45.7,
+        "cl3": 68.0,
+        "rank": 28,
+        "cost": 4505305
+      }
+    },
+    "Esure Insurance Limited": {
+      "2024H1": {
+        "vol": 20386,
+        "uph": 81.7,
+        "cl3": 22.5,
+        "rank": 23,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 16080,
+        "uph": 73.4,
+        "cl3": 38.4,
+        "rank": 25,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 14395,
+        "uph": 72.7,
+        "cl3": 49.8,
+        "rank": 26,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 11352,
+        "uph": 70.2,
+        "cl3": 44.5,
+        "rank": 29,
+        "cost": 5252797
+      }
+    },
+    "Metro Bank PLC": {
+      "2024H1": {
+        "vol": 9246,
+        "uph": 46.3,
+        "cl3": 29.2,
+        "rank": 43,
+        "cost": null
+      },
+      "2024H2": {
+        "vol": 8916,
+        "uph": 43.9,
+        "cl3": 31.3,
+        "rank": 43,
+        "cost": null
+      },
+      "2025H1": {
+        "vol": 9674,
+        "uph": 45.6,
+        "cl3": 35.7,
+        "rank": 36,
+        "cost": null
+      },
+      "2025H2": {
+        "vol": 11244,
+        "uph": 51.1,
+        "cl3": 42.1,
+        "rank": 30,
+        "cost": 4557531
+      }
+    }
+  },
+  "top20": [
+    {
+      "firm_name": "National Westminster Bank Public Limited Company",
+      "complaints_opened": 97511.0,
+      "uphold_rate_weighted_pct": 57.22,
+      "rank_by_volume": 1,
+      "cost_total": 41311510.0
+    },
+    {
+      "firm_name": "Lloyds Bank PLC",
+      "complaints_opened": 90837.0,
+      "uphold_rate_weighted_pct": 68.45,
+      "rank_by_volume": 2,
+      "cost_total": 41544302.0
+    },
+    {
+      "firm_name": "Barclays Bank UK PLC",
+      "complaints_opened": 85996.0,
+      "uphold_rate_weighted_pct": 60.65,
+      "rank_by_volume": 3,
+      "cost_total": 37317964.0
+    },
+    {
+      "firm_name": "HSBC UK Bank PLC",
+      "complaints_opened": 81503.0,
+      "uphold_rate_weighted_pct": 58.48,
+      "rank_by_volume": 4,
+      "cost_total": 34837642.0
+    },
+    {
+      "firm_name": "Bank Of Scotland PLC",
+      "complaints_opened": 79508.0,
+      "uphold_rate_weighted_pct": 68.06,
+      "rank_by_volume": 5,
+      "cost_total": 36269959.0
+    },
+    {
+      "firm_name": "Nationwide Building Society",
+      "complaints_opened": 69388.0,
+      "uphold_rate_weighted_pct": 52.38,
+      "rank_by_volume": 6,
+      "cost_total": 28389406.0
+    },
+    {
+      "firm_name": "Santander UK PLC",
+      "complaints_opened": 64741.0,
+      "uphold_rate_weighted_pct": 46.31,
+      "rank_by_volume": 7,
+      "cost_total": 25309199.0
+    },
+    {
+      "firm_name": "Eui Limited",
+      "complaints_opened": 60221.0,
+      "uphold_rate_weighted_pct": 63.86,
+      "rank_by_volume": 8,
+      "cost_total": 26712831.0
+    },
+    {
+      "firm_name": "Domestic & General Insurance PLC",
+      "complaints_opened": 56025.0,
+      "uphold_rate_weighted_pct": 52.22,
+      "rank_by_volume": 9,
+      "cost_total": 22895176.0
+    },
+    {
+      "firm_name": "Aviva Insurance Limited",
+      "complaints_opened": 49795.0,
+      "uphold_rate_weighted_pct": 56.27,
+      "rank_by_volume": 10,
+      "cost_total": 20954234.0
+    },
+    {
+      "firm_name": "Monzo Bank LTD",
+      "complaints_opened": 49570.0,
+      "uphold_rate_weighted_pct": 30.03,
+      "rank_by_volume": 11,
+      "cost_total": 16957401.0
+    },
+    {
+      "firm_name": "British Gas Services Limited",
+      "complaints_opened": 49016.0,
+      "uphold_rate_weighted_pct": 93.07,
+      "rank_by_volume": 12,
+      "cost_total": 26037789.0
+    },
+    {
+      "firm_name": "U K Insurance Limited",
+      "complaints_opened": 37282.0,
+      "uphold_rate_weighted_pct": 67.44,
+      "rank_by_volume": 13,
+      "cost_total": 16937958.0
+    },
+    {
+      "firm_name": "Clydesdale Bank PLC",
+      "complaints_opened": 34185.0,
+      "uphold_rate_weighted_pct": 64.1,
+      "rank_by_volume": 14,
+      "cost_total": 15188396.0
+    },
+    {
+      "firm_name": "TSB Bank PLC",
+      "complaints_opened": 33705.0,
+      "uphold_rate_weighted_pct": 52.38,
+      "rank_by_volume": 15,
+      "cost_total": 13790064.0
+    },
+    {
+      "firm_name": "Capital One (europe) PLC",
+      "complaints_opened": 30593.0,
+      "uphold_rate_weighted_pct": 34.28,
+      "rank_by_volume": 16,
+      "cost_total": 10855620.0
+    },
+    {
+      "firm_name": "Bupa Insurance Services Limited",
+      "complaints_opened": 28091.0,
+      "uphold_rate_weighted_pct": 57.13,
+      "rank_by_volume": 17,
+      "cost_total": 11893448.0
+    },
+    {
+      "firm_name": "Aviva Life Services UK Limited",
+      "complaints_opened": 26131.0,
+      "uphold_rate_weighted_pct": 66.91,
+      "rank_by_volume": 18,
+      "cost_total": 11830288.0
+    },
+    {
+      "firm_name": "The Royal Bank Of Scotland PLC",
+      "complaints_opened": 19884.0,
+      "uphold_rate_weighted_pct": 58.55,
+      "rank_by_volume": 19,
+      "cost_total": 8503393.0
+    },
+    {
+      "firm_name": "Hastings Insurance Services Limited",
+      "complaints_opened": 19781.0,
+      "uphold_rate_weighted_pct": 52.04,
+      "rank_by_volume": 20,
+      "cost_total": 8073022.0
+    }
+  ],
+  "prod_table": [
+    {
+      "pg": "Banking and credit cards",
+      "vol": 844807,
+      "share": 51.1,
+      "uphold": 54.4,
+      "cl3": 38.4,
+      "cost": 350687834
+    },
+    {
+      "pg": "Decumulation & pensions",
+      "vol": 80272,
+      "share": 4.9,
+      "uphold": 70.0,
+      "cl3": 18.4,
+      "cost": 37092888
+    },
+    {
+      "pg": "Home finance",
+      "vol": 66543,
+      "share": 4.0,
+      "uphold": 56.5,
+      "cl3": 27.2,
+      "cost": 28045878
+    },
+    {
+      "pg": "Insurance & pure protection",
+      "vol": 620885,
+      "share": 37.6,
+      "uphold": 57.0,
+      "cl3": 33.5,
+      "cost": 262652982
+    },
+    {
+      "pg": "Investments",
+      "vol": 39931,
+      "share": 2.4,
+      "uphold": 54.3,
+      "cl3": 23.6,
+      "cost": 16568570
+    }
+  ],
+  "opp": [
+    {
+      "product_group": "Decumulation & pensions",
+      "latest_volume": 80272.0,
+      "avg_uphold_rate_pct": 60.0,
+      "avg_pct_closed_3days": 18.4,
+      "avg_pct_closed_3to8weeks": 67.5,
+      "volume_trend_pct_vs_prior": -95.4,
+      "score_volume": 1.200483055775051,
+      "score_uphold": 5.0,
+      "score_closure": 5.0,
+      "priority_score": 11.2,
+      "priority_rank": 1,
+      "cost_total": 37092888.0,
+      "cost_per_compl": 462.0
+    },
+    {
+      "product_group": "Investments",
+      "latest_volume": 39931.0,
+      "avg_uphold_rate_pct": 58.8,
+      "avg_pct_closed_3days": 23.6,
+      "avg_pct_closed_3to8weeks": 69.0,
+      "volume_trend_pct_vs_prior": -97.7,
+      "score_volume": 1.0,
+      "score_uphold": 4.673469387755102,
+      "score_closure": 3.96,
+      "priority_score": 9.63,
+      "priority_rank": 2,
+      "cost_total": 16568570.0,
+      "cost_per_compl": 415.0
+    },
+    {
+      "product_group": "Banking and credit cards",
+      "latest_volume": 844807.0,
+      "avg_uphold_rate_pct": 52.1,
+      "avg_pct_closed_3days": 38.4,
+      "avg_pct_closed_3to8weeks": 57.4,
+      "volume_trend_pct_vs_prior": -51.5,
+      "score_volume": 5.0,
+      "score_uphold": 2.8503401360544225,
+      "score_closure": 1.0,
+      "priority_score": 8.85,
+      "priority_rank": 3,
+      "cost_total": 350687834.0,
+      "cost_per_compl": 415.0
+    },
+    {
+      "product_group": "Insurance & pure protection",
+      "latest_volume": 620885.0,
+      "avg_uphold_rate_pct": 45.3,
+      "avg_pct_closed_3days": 33.5,
+      "avg_pct_closed_3to8weeks": 60.4,
+      "volume_trend_pct_vs_prior": -64.3,
+      "score_volume": 3.887172682500161,
+      "score_uphold": 1.0,
+      "score_closure": 1.9799999999999995,
+      "priority_score": 6.87,
+      "priority_rank": 4,
+      "cost_total": 262652982.0,
+      "cost_per_compl": 423.0
+    },
+    {
+      "product_group": "Home finance",
+      "latest_volume": 66543.0,
+      "avg_uphold_rate_pct": 50.3,
+      "avg_pct_closed_3days": 27.2,
+      "avg_pct_closed_3to8weeks": 68.7,
+      "volume_trend_pct_vs_prior": -96.2,
+      "score_volume": 1.1322539124038982,
+      "score_uphold": 2.3605442176870746,
+      "score_closure": 3.24,
+      "priority_score": 6.73,
+      "priority_rank": 5,
+      "cost_total": 28045878.0,
+      "cost_per_compl": 421.0
+    }
+  ],
+  "scen": [
+    {
+      "scenario": "Complaint volume reduced by 5%",
+      "assumption": "Process/prevention initiatives reduce complaints by 5%",
+      "baseline_complaints": 1652438.0,
+      "scenario_complaints": 1569816.0,
+      "complaints_avoided": 82621.0,
+      "type": "volume_reduction",
+      "baseline_avg_uphold_pct": "",
+      "target_uphold_pct": "",
+      "implication": "",
+      "current_avg_pct_3days": "",
+      "target_pct_3days": "",
+      "uplift_pct_points": ""
+    },
+    {
+      "scenario": "Complaint volume reduced by 10%",
+      "assumption": "Process/prevention initiatives reduce complaints by 10%",
+      "baseline_complaints": 1652438.0,
+      "scenario_complaints": 1487194.0,
+      "complaints_avoided": 165243.0,
+      "type": "volume_reduction",
+      "baseline_avg_uphold_pct": "",
+      "target_uphold_pct": "",
+      "implication": "",
+      "current_avg_pct_3days": "",
+      "target_pct_3days": "",
+      "uplift_pct_points": ""
+    },
+    {
+      "scenario": "Complaint volume reduced by 15%",
+      "assumption": "Process/prevention initiatives reduce complaints by 15%",
+      "baseline_complaints": 1652438.0,
+      "scenario_complaints": 1404572.0,
+      "complaints_avoided": 247865.0,
+      "type": "volume_reduction",
+      "baseline_avg_uphold_pct": "",
+      "target_uphold_pct": "",
+      "implication": "",
+      "current_avg_pct_3days": "",
+      "target_pct_3days": "",
+      "uplift_pct_points": ""
+    },
+    {
+      "scenario": "Complaint volume reduced by 20%",
+      "assumption": "Process/prevention initiatives reduce complaints by 20%",
+      "baseline_complaints": 1652438.0,
+      "scenario_complaints": 1321950.0,
+      "complaints_avoided": 330487.0,
+      "type": "volume_reduction",
+      "baseline_avg_uphold_pct": "",
+      "target_uphold_pct": "",
+      "implication": "",
+      "current_avg_pct_3days": "",
+      "target_pct_3days": "",
+      "uplift_pct_points": ""
+    },
+    {
+      "scenario": "High uphold products reach market median uphold rate",
+      "assumption": "Products with uphold >75th percentile (58.8%) partially close gap to median (52.1%)",
+      "baseline_complaints": "",
+      "scenario_complaints": "",
+      "complaints_avoided": "",
+      "type": "uphold_improvement",
+      "baseline_avg_uphold_pct": 53.3,
+      "target_uphold_pct": 52.1,
+      "implication": "Fewer customers winning complaints implies fewer valid failures reaching complaint stage",
+      "current_avg_pct_3days": "",
+      "target_pct_3days": "",
+      "uplift_pct_points": ""
+    },
+    {
+      "scenario": "All firms reach top-quartile 3-day closure rate",
+      "assumption": "Firms currently below 75th percentile (44.2%) improve to match it",
+      "baseline_complaints": "",
+      "scenario_complaints": "",
+      "complaints_avoided": "",
+      "type": "closure_improvement",
+      "baseline_avg_uphold_pct": "",
+      "target_uphold_pct": "",
+      "implication": "",
+      "current_avg_pct_3days": 29.6,
+      "target_pct_3days": 44.2,
+      "uplift_pct_points": 14.6
+    }
+  ],
+  "cost_scenarios": [
+    {
+      "scenario": "5% complaint volume reduction",
+      "complaints_avoided": 82621,
+      "estimated_saving_gbp": 34751998,
+      "assumption": "Each avoided complaint saves ~\u00a3420 (handling + FOS risk + redress). Modelled, not audited."
+    },
+    {
+      "scenario": "10% complaint volume reduction",
+      "complaints_avoided": 165243,
+      "estimated_saving_gbp": 69504416,
+      "assumption": "Each avoided complaint saves ~\u00a3420 (handling + FOS risk + redress). Modelled, not audited."
+    },
+    {
+      "scenario": "15% complaint volume reduction",
+      "complaints_avoided": 247865,
+      "estimated_saving_gbp": 104256835,
+      "assumption": "Each avoided complaint saves ~\u00a3420 (handling + FOS risk + redress). Modelled, not audited."
+    },
+    {
+      "scenario": "20% complaint volume reduction",
+      "complaints_avoided": 330487,
+      "estimated_saving_gbp": 139009254,
+      "assumption": "Each avoided complaint saves ~\u00a3420 (handling + FOS risk + redress). Modelled, not audited."
+    }
+  ]
+};
+
+const fmt  = n => n==null ? "N/A" : Number(n).toLocaleString();
+const fmtP = n => n==null ? "N/A" : n.toFixed(1)+"%";
+const fmtG = n => {
+  if(n==null) return "N/A";
+  if(n>=1e9)  return "£"+(n/1e9).toFixed(2)+"bn";
+  if(n>=1e6)  return "£"+(n/1e6).toFixed(1)+"m";
+  return "£"+(n/1e3).toFixed(0)+"k";
+};
+const PERIODS = DATA.periods;
+let charts = {};
+function destroyChart(id){ if(charts[id]){charts[id].destroy();delete charts[id];} }
+
+function showTab(t){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(s=>s.classList.remove("active"));
+  document.getElementById(t).classList.add("active");
+  document.querySelectorAll(".tab").forEach(el=>{
+    if(el.getAttribute("onclick").includes("'"+t+"'")) el.classList.add("active");
+  });
+  if(t==="firm")    initFirmTab();
+  if(t==="product") initProductTab();
+  if(t==="priority") initPriorityTab();
+}
+
+function initOverview(){
+  const m=DATA.market, v2=m["2025H2"], v1=m["2025H1"], v0=m["2024H1"];
+  document.getElementById("k-vol").textContent=fmt(v2);
+  document.getElementById("k-cost").textContent=fmtG(DATA.market_cost_total);
+  const chg=((v2-v1)/v1*100).toFixed(1);
+  const dd=document.getElementById("k-vol-d");
+  dd.textContent=(chg>=0?"+":"")+chg+"% vs 2025H1"; dd.className="delta "+(chg>=0?"up":"dn");
+  const pm=DATA.prod_by_period["2025H2"];
+  const top=Object.entries(pm).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById("k-top-prod").textContent="Banking & CC";
+  document.getElementById("k-top-share").textContent=fmt(top[1])+" complaints ("+(top[1]/v2*100).toFixed(1)+"%)";
+  const tc=((v2-v0)/v0*100).toFixed(1);
+  document.getElementById("k-trend").textContent=(tc>=0?"+":"")+tc+"%";
+
+  destroyChart("c-market");
+  charts["c-market"]=new Chart(document.getElementById("c-market"),{type:"bar",
+    data:{labels:PERIODS,datasets:[{label:"Complaints",data:PERIODS.map(p=>m[p]),
+      backgroundColor:PERIODS.map((_,i)=>i===3?"#2563eb":"#93c5fd"),borderRadius:4}]},
+    options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>" "+fmt(c.raw)}}},
+      scales:{y:{ticks:{callback:v=>fmt(v)},grid:{color:"#f1f5f9"}},x:{grid:{display:false}}},
+      responsive:true,maintainAspectRatio:false}});
+
+  const pm2=DATA.prod_by_period["2025H2"];
+  destroyChart("c-prodmix");
+  charts["c-prodmix"]=new Chart(document.getElementById("c-prodmix"),{type:"doughnut",
+    data:{labels:DATA.products,datasets:[{data:DATA.products.map(p=>pm2[p]||0),
+      backgroundColor:DATA.prod_col,borderWidth:2}]},
+    options:{plugins:{legend:{position:"right",labels:{font:{size:11},boxWidth:14}},
+      tooltip:{callbacks:{label:c=>" "+fmt(c.raw)+" ("+(c.raw/v2*100).toFixed(1)+"%)"}}}},
+      responsive:true,maintainAspectRatio:false}});
+
+  const t20=DATA.top20;
+  destroyChart("c-topfirms");
+  charts["c-topfirms"]=new Chart(document.getElementById("c-topfirms"),{type:"bar",
+    data:{labels:t20.map(f=>{const n=f.firm_name;return n.length>28?n.slice(0,26)+"…":n;}),
+      datasets:[{label:"Complaints",data:t20.map(f=>f.complaints_opened),backgroundColor:"#2563eb",borderRadius:3}]},
+    options:{indexAxis:"y",plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>" "+fmt(c.raw)}}},
+      scales:{x:{ticks:{callback:v=>fmt(v)},grid:{color:"#f1f5f9"}},y:{ticks:{font:{size:10}},grid:{display:false}}},
+      responsive:true,maintainAspectRatio:false}});
+
+  const tbody=document.getElementById("t-top20");
+  tbody.innerHTML=t20.map((f,i)=>{
+    const u=f.uphold_rate_weighted_pct;
+    const ub=u==null?"":u>60?`<span class="badge br">${u.toFixed(1)}%</span>`:u>45?`<span class="badge ba">${u.toFixed(1)}%</span>`:`<span class="badge bg">${u.toFixed(1)}%</span>`;
+    return `<tr><td>${i+1}</td><td>${f.firm_name}</td><td>${fmt(f.complaints_opened)}</td><td>${ub}</td><td style="color:#7c3aed;font-weight:600">${fmtG(f.cost_total)}</td></tr>`;
+  }).join("");
+}
+
+function initFirmTab(){
+  const sel=document.getElementById("firm-sel");
+  if(!sel.options.length) DATA.top30.forEach(f=>{const o=document.createElement("option");o.value=f;o.text=f;sel.appendChild(o);});
+  updateFirm();
+}
+
+function updateFirm(){
+  const firm=document.getElementById("firm-sel").value;
+  const fd=DATA.firm_data[firm];
+  const d2=fd["2025H2"]||{}, d1=fd["2025H1"]||{};
+  document.getElementById("fb-v").textContent=d2.vol!=null?fmt(d2.vol):"N/A";
+  document.getElementById("fb-u").textContent=d2.uph!=null?d2.uph.toFixed(1)+"%":"N/A";
+  document.getElementById("fb-c").textContent=d2.cl3!=null?d2.cl3.toFixed(1)+"%":"N/A";
+  document.getElementById("fb-cost").textContent=d2.cost!=null?fmtG(d2.cost):"N/A";
+  if(d2.vol!=null&&d1.vol!=null){
+    const chg=((d2.vol-d1.vol)/d1.vol*100).toFixed(1);
+    const el=document.getElementById("fb-vd");
+    el.textContent=(chg>=0?"+":"")+chg+"% vs 2025H1"; el.className="delta "+(chg>=0?"up":"dn");
+  } else document.getElementById("fb-vd").textContent="";
+
+  destroyChart("c-firm-vol");
+  charts["c-firm-vol"]=new Chart(document.getElementById("c-firm-vol"),{type:"line",
+    data:{labels:PERIODS,datasets:[{label:"Complaints",data:PERIODS.map(p=>fd[p]?fd[p].vol:null),
+      borderColor:"#2563eb",backgroundColor:"rgba(37,99,235,.1)",fill:true,tension:.3,pointRadius:5,spanGaps:false}]},
+    options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>" "+fmt(c.raw)}}},
+      scales:{y:{ticks:{callback:v=>fmt(v)},grid:{color:"#f1f5f9"}},x:{grid:{display:false}}},
+      responsive:true,maintainAspectRatio:false}});
+
+  destroyChart("c-firm-uph");
+  charts["c-firm-uph"]=new Chart(document.getElementById("c-firm-uph"),{type:"line",
+    data:{labels:PERIODS,datasets:[{label:"Uphold %",data:PERIODS.map(p=>fd[p]?fd[p].uph:null),
+      borderColor:"#dc2626",backgroundColor:"rgba(220,38,38,.08)",fill:true,tension:.3,pointRadius:5,spanGaps:false}]},
+    options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw!=null?c.raw.toFixed(1)+"%":"N/A"}}},
+      scales:{y:{min:0,max:100,ticks:{callback:v=>v+"%"},grid:{color:"#f1f5f9"}},x:{grid:{display:false}}},
+      responsive:true,maintainAspectRatio:false}});
+}
+
+function initProductTab(){
+  const PRODS=DATA.products, PCOL=DATA.prod_col;
+  destroyChart("c-pvol");
+  charts["c-pvol"]=new Chart(document.getElementById("c-pvol"),{type:"bar",
+    data:{labels:PERIODS,datasets:PRODS.map((p,i)=>({label:p,
+      data:PERIODS.map(per=>DATA.prod_by_period[per]?DATA.prod_by_period[per][p]:null),
+      backgroundColor:PCOL[i],borderRadius:3}))},
+    options:{plugins:{legend:{position:"top",labels:{font:{size:10},boxWidth:12}},
+      tooltip:{callbacks:{label:c=>" "+fmt(c.raw)}}},
+      scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v)},grid:{color:"#f1f5f9"}}},
+      responsive:true,maintainAspectRatio:false}});
+
+  destroyChart("c-puph");
+  charts["c-puph"]=new Chart(document.getElementById("c-puph"),{type:"line",
+    data:{labels:PERIODS,datasets:PRODS.map((p,i)=>({label:p,
+      data:PERIODS.map(per=>DATA.uphold_by_product[per]?DATA.uphold_by_product[per][p]:null),
+      borderColor:PCOL[i],backgroundColor:"transparent",tension:.3,pointRadius:4,spanGaps:false}))},
+    options:{plugins:{legend:{position:"top",labels:{font:{size:10},boxWidth:12}},
+      tooltip:{callbacks:{label:c=>c.raw!=null?c.raw.toFixed(1)+"%":"N/A"}}},
+      scales:{y:{min:0,max:100,ticks:{callback:v=>v+"%"},grid:{color:"#f1f5f9"}},x:{grid:{display:false}}},
+      responsive:true,maintainAspectRatio:false}});
+
+  destroyChart("c-pcl");
+  charts["c-pcl"]=new Chart(document.getElementById("c-pcl"),{type:"bar",
+    data:{labels:PERIODS,datasets:PRODS.map((p,i)=>({label:p,
+      data:PERIODS.map(per=>{const c=DATA.closure_by_product[per];return c&&c[p]?c[p].pct_3days:null;}),
+      backgroundColor:PCOL[i],borderRadius:3}))},
+    options:{plugins:{legend:{position:"top",labels:{font:{size:10},boxWidth:12}},
+      tooltip:{callbacks:{label:c=>c.raw!=null?c.raw.toFixed(1)+"%":"N/A"}}},
+      scales:{x:{grid:{display:false}},y:{min:0,max:100,ticks:{callback:v=>v+"%"},grid:{color:"#f1f5f9"}}},
+      responsive:true,maintainAspectRatio:false}});
+
+  const tb=document.getElementById("t-prod");
+  tb.innerHTML=DATA.prod_table.map(r=>{
+    const ub=r.uphold==null?"N/A":r.uphold>55?`<span class="badge br">${r.uphold}%</span>`:r.uphold>40?`<span class="badge ba">${r.uphold}%</span>`:`<span class="badge bg">${r.uphold}%</span>`;
+    const cb=r.cl3==null?"N/A":r.cl3<25?`<span class="badge br">${r.cl3}%</span>`:r.cl3<40?`<span class="badge ba">${r.cl3}%</span>`:`<span class="badge bg">${r.cl3}%</span>`;
+    return `<tr><td>${r.pg}</td><td>${fmt(r.vol)}</td><td>${r.share}%</td><td>${ub}</td><td>${cb}</td><td style="color:#7c3aed;font-weight:600">${fmtG(r.cost)}</td></tr>`;
+  }).join("");
+}
+
+function initPriorityTab(){
+  const opps=DATA.opp;
+  document.getElementById("avg-cost").textContent=fmt(DATA.avg_cost_per_compl);
+  destroyChart("c-scatter");
+  charts["c-scatter"]=new Chart(document.getElementById("c-scatter"),{type:"bubble",
+    data:{datasets:[{label:"Product groups",
+      data:opps.map(o=>({x:o.avg_uphold_rate_pct||0,y:o.latest_volume||0,
+        r:Math.max(8,(o.cost_total||0)/6e6),label:o.product_group})),
+      backgroundColor:DATA.prod_col.map(c=>c+"cc"),borderColor:DATA.prod_col,borderWidth:2}]},
+    options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{
+      const d=c.raw;return[d.label,"Volume: "+fmt(d.y),"Uphold: "+d.x+"%","Est. cost: "+fmtG((d.r/8*6e6))];
+    }}}},
+    scales:{x:{title:{display:true,text:"Avg Uphold Rate % — FCA Consumer Duty signal (higher = more regulatory risk)"},
+      min:0,max:100,grid:{color:"#f1f5f9"}},
+      y:{title:{display:true,text:"Complaint Volume"},ticks:{callback:v=>fmt(v)},grid:{color:"#f1f5f9"}}},
+    responsive:true,maintainAspectRatio:false}});
+
+  const BCOLS=["#dc2626","#d97706","#2563eb","#059669","#7c3aed"];
+  document.getElementById("opp-list").innerHTML=opps.map((o,i)=>`
+    <div class="opp" style="border-color:${BCOLS[i%5]}">
+      <h4>#${o.priority_rank} — ${o.product_group}</h4>
+      <div class="opp-meta">
+        <div class="om"><strong>${fmt(o.latest_volume)}</strong><br>Complaints</div>
+        <div class="om"><strong>${o.avg_uphold_rate_pct!=null?o.avg_uphold_rate_pct+"%":"N/A"}</strong><br>Uphold Rate</div>
+        <div class="om"><strong>${o.avg_pct_closed_3days!=null?o.avg_pct_closed_3days+"%":"N/A"}</strong><br>3-Day Closure</div>
+        <div class="om cost"><strong>${fmtG(o.cost_total)}</strong><br>Est. Cost (modelled)</div>
+      </div>
+    </div>`).join("");
+
+  document.getElementById("scen-list").innerHTML=DATA.cost_scenarios.map(s=>`
+    <div class="scard">
+      <h4>${s.scenario}</h4>
+      <p>${s.assumption}</p>
+      <div class="sg">
+        <div class="sv"><div class="n">${fmt(s.complaints_avoided)}</div><div class="l">Complaints avoided</div></div>
+        <div class="sv purple"><div class="n">${fmtG(s.estimated_saving_gbp)}</div><div class="l">Est. cost saving</div></div>
+      </div>
+    </div>`).join("");
+}
+
+initOverview();
+</script>
+</body>
+</html>

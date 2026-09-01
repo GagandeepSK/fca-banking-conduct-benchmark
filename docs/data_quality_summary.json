@@ -1,0 +1,22 @@
+{
+  "total_rows": 1695,
+  "unique_firms": 300,
+  "periods": [
+    "2024H1",
+    "2024H2",
+    "2025H1",
+    "2025H2"
+  ],
+  "product_groups": [
+    "Banking and credit cards",
+    "Decumulation & pensions",
+    "Home finance",
+    "Insurance & pure protection",
+    "Investments"
+  ],
+  "missing_complaints_opened": 0,
+  "missing_complaints_closed": 34,
+  "missing_uphold_rate": 207,
+  "missing_denominator": 441,
+  "notes": []
+}

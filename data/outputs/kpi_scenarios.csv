@@ -1,0 +1,7 @@
+scenario,assumption,baseline_complaints,scenario_complaints,complaints_avoided,type,baseline_avg_uphold_pct,target_uphold_pct,implication,current_avg_pct_3days,target_pct_3days,uplift_pct_points
+Complaint volume reduced by 5%,Process/prevention initiatives reduce complaints by 5%,1652438.0,1569816.0,82621.0,volume_reduction,,,,,,
+Complaint volume reduced by 10%,Process/prevention initiatives reduce complaints by 10%,1652438.0,1487194.0,165243.0,volume_reduction,,,,,,
+Complaint volume reduced by 15%,Process/prevention initiatives reduce complaints by 15%,1652438.0,1404572.0,247865.0,volume_reduction,,,,,,
+Complaint volume reduced by 20%,Process/prevention initiatives reduce complaints by 20%,1652438.0,1321950.0,330487.0,volume_reduction,,,,,,
+High uphold products reach market median uphold rate,Products with uphold >75th percentile (58.8%) partially close gap to median (52.1%),,,,uphold_improvement,53.3,52.1,Fewer customers winning complaints implies fewer valid failures reaching complaint stage,,,
+All firms reach top-quartile 3-day closure rate,Firms currently below 75th percentile (44.2%) improve to match it,,,,closure_improvement,,,,29.6,44.2,14.6

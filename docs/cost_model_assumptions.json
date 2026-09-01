@@ -1,0 +1,13 @@
+{
+  "internal_handling_cost_per_complaint_gbp": 200,
+  "fos_case_fee_gbp": 650,
+  "fos_escalation_rate": 0.08,
+  "redress_per_upheld_complaint_gbp": 300,
+  "uphold_rate_fallback": 0.55,
+  "source_fos_fee": "FOS published fee schedule 2024/25 \u2014 fos.org.uk",
+  "source_handling": "Industry estimate; range \u00a3150-\u00a3400 per complaint",
+  "source_escalation": "Approximate FCA/FOS annual complaint data",
+  "source_redress": "Conservative estimate; actual varies by product and firm",
+  "formula": "total_cost = (handling \u00d7 vol) + (fos_fee \u00d7 fos_rate \u00d7 vol) + (redress \u00d7 uphold_rate \u00d7 vol)",
+  "note": "Modelled estimates for prioritisation only \u2014 not audited figures. Label clearly in all outputs."
+}

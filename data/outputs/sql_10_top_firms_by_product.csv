@@ -1,0 +1,51 @@
+product_group,firm_name,complaints_opened,product_rank
+Banking and credit cards,National Westminster Bank Public Limited Company,90819.0,1
+Banking and credit cards,Lloyds Bank PLC,87894.0,2
+Banking and credit cards,Barclays Bank UK PLC,80470.0,3
+Banking and credit cards,HSBC UK Bank PLC,75064.0,4
+Banking and credit cards,Bank Of Scotland PLC,67071.0,5
+Banking and credit cards,Nationwide Building Society,63947.0,6
+Banking and credit cards,Santander UK PLC,60432.0,7
+Banking and credit cards,Monzo Bank LTD,49247.0,8
+Banking and credit cards,TSB Bank PLC,32154.0,9
+Banking and credit cards,Clydesdale Bank PLC,31993.0,10
+Decumulation & pensions,Aviva Life Services UK Limited,17892.0,1
+Decumulation & pensions,Phoenix Life Limited,12980.0,2
+Decumulation & pensions,The Prudential Assurance Company Limited,6508.0,3
+Decumulation & pensions,"Royal London Mutual Insurance Society, Limited (the)",5817.0,4
+Decumulation & pensions,Scottish Widows Limited,5592.0,5
+Decumulation & pensions,Scottish Equitable PLC,5241.0,6
+Decumulation & pensions,Reassure Limited,3410.0,7
+Decumulation & pensions,People's Administration Services Limited,2731.0,8
+Decumulation & pensions,Hargreaves Lansdown Asset Management Limited,2262.0,9
+Decumulation & pensions,St. James's Place Wealth Management PLC,2020.0,10
+Home finance,Bank Of Scotland PLC,12223.0,1
+Home finance,National Westminster Bank Public Limited Company,6123.0,2
+Home finance,Barclays Bank UK PLC,5356.0,3
+Home finance,Nationwide Building Society,5263.0,4
+Home finance,HSBC UK Bank PLC,5047.0,5
+Home finance,Santander UK PLC,4106.0,6
+Home finance,Topaz Finance Limited,3173.0,7
+Home finance,Lloyds Bank PLC,2575.0,8
+Home finance,Clydesdale Bank PLC,2174.0,9
+Home finance,TSB Bank PLC,1523.0,10
+Insurance & pure protection,Eui Limited,60221.0,1
+Insurance & pure protection,Domestic & General Insurance PLC,56025.0,2
+Insurance & pure protection,Aviva Insurance Limited,49795.0,3
+Insurance & pure protection,British Gas Services Limited,49016.0,4
+Insurance & pure protection,U K Insurance Limited,37282.0,5
+Insurance & pure protection,Bupa Insurance Services Limited,28091.0,6
+Insurance & pure protection,Hastings Insurance Services Limited,19781.0,7
+Insurance & pure protection,Axa Ppp Healthcare Limited,19555.0,8
+Insurance & pure protection,Axa Insurance UK PLC,16052.0,9
+Insurance & pure protection,Liverpool Victoria Insurance Company Limited,12025.0,10
+Investments,Hargreaves Lansdown Asset Management Limited,4759.0,1
+Investments,Aviva Life Services UK Limited,2986.0,2
+Investments,Equiniti Financial Services Limited,2864.0,3
+Investments,The Prudential Assurance Company Limited,2600.0,4
+Investments,Interactive Investor Services Limited,2491.0,5
+Investments,Trading 212 UK Limited,1691.0,6
+Investments,St. James's Place Wealth Management PLC,1597.0,7
+Investments,RBS Collective Investment Funds Limited,1342.0,8
+Investments,Financial Administration Services Limited,1308.0,9
+Investments,Scottish Widows Limited,1163.0,10
