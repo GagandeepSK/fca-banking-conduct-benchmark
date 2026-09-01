@@ -1,5 +1,17 @@
 # UK Retail Banking Complaints Benchmark
 
+## Dashboard
+
+[![Open Dashboard](https://img.shields.io/badge/Open%20Dashboard-Live%20Preview-2563eb?style=for-the-badge)](http://htmlpreview.github.io/?https://github.com/GagandeepSK/fca-banking-conduct-benchmark/blob/main/dashboard.html)
+
+**[Click to open the interactive dashboard](http://htmlpreview.github.io/?https://github.com/GagandeepSK/fca-banking-conduct-benchmark/blob/main/dashboard.html)**
+
+Or download `dashboard.html` and open locally — no server required. Four tabs:
+1. **Executive Overview** — market totals, product mix, top firms
+2. **Firm Benchmark** — select any top-30 firm, view volume/uphold/closure trends
+3. **Product Benchmark** — all 5 product groups across all 4 periods
+4. **Priority Opportunities** — scored opportunity matrix, scenario modelling
+
 ## Overview
 Reproducible benchmark of UK retail banking complaint performance using publicly available FCA firm-level complaints data across four consecutive reporting periods (2024H1 – 2025H2).
 
@@ -60,18 +72,6 @@ Or install dependencies: `pip install pandas openpyxl numpy duckdb`
 - Insurance and pure protection: **38% of all complaints** (620,885)
 - Top firm by volume: NatWest (97,511), Lloyds (90,837), Barclays UK (85,996)
 - Market trend: complaints fell from 1,774,139 (2024H1) to 1,652,438 (2025H2) — a 6.9% reduction
-
-## Dashboard
-
-[![Open Dashboard](https://img.shields.io/badge/Open%20Dashboard-Live%20Preview-2563eb?style=for-the-badge)](http://htmlpreview.github.io/?https://github.com/GagandeepSK/fca-banking-conduct-benchmark/blob/main/dashboard.html)
-
-**[Click to open the interactive dashboard](http://htmlpreview.github.io/?https://github.com/GagandeepSK/fca-banking-conduct-benchmark/blob/main/dashboard.html)**
-
-Or download `dashboard.html` and open locally — no server required. Four tabs:
-1. **Executive Overview** — market totals, product mix, top firms
-2. **Firm Benchmark** — select any top-30 firm, view volume/uphold/closure trends
-3. **Product Benchmark** — all 5 product groups across all 4 periods
-4. **Priority Opportunities** — scored opportunity matrix, scenario modelling
 
 ## Tableau
 Tableau-ready CSVs in `data/outputs/`: `tableau_firms.csv`, `tableau_products.csv`, `tableau_market.csv`, `tableau_opportunities.csv`.
