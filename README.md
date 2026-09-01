@@ -62,7 +62,12 @@ Or install dependencies: `pip install pandas openpyxl numpy duckdb`
 - Market trend: complaints fell from 1,774,139 (2024H1) to 1,652,438 (2025H2) — a 6.9% reduction
 
 ## Dashboard
-Open `dashboard.html` directly in a browser. Four tabs:
+
+[![Open Dashboard](https://img.shields.io/badge/Open%20Dashboard-Live%20Preview-2563eb?style=for-the-badge)](http://htmlpreview.github.io/?https://github.com/GagandeepSK/fca-banking-conduct-benchmark/blob/main/dashboard.html)
+
+**[Click to open the interactive dashboard](http://htmlpreview.github.io/?https://github.com/GagandeepSK/fca-banking-conduct-benchmark/blob/main/dashboard.html)**
+
+Or download `dashboard.html` and open locally — no server required. Four tabs:
 1. **Executive Overview** — market totals, product mix, top firms
 2. **Firm Benchmark** — select any top-30 firm, view volume/uphold/closure trends
 3. **Product Benchmark** — all 5 product groups across all 4 periods
