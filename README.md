@@ -4,8 +4,6 @@
 
 [![Open Dashboard](https://img.shields.io/badge/Open%20Dashboard-Live%20Preview-2563eb?style=for-the-badge)](http://htmlpreview.github.io/?https://github.com/GagandeepSK/fca-banking-conduct-benchmark/blob/main/dashboard.html)
 
-**[Click to open the interactive dashboard](http://htmlpreview.github.io/?https://github.com/GagandeepSK/fca-banking-conduct-benchmark/blob/main/dashboard.html)**
-
 Or download `dashboard.html` and open locally — no server required. Four tabs:
 1. **Executive Overview** — market totals, product mix, top firms
 2. **Firm Benchmark** — select any top-30 firm, view volume/uphold/closure trends
